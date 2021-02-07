@@ -40,7 +40,7 @@ let getFoods = async (foodName) => {
   let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foodName}`);
   let data = await response.json();
   // hide loader
-  mealLoader.classList.add('d-none')
+  mealLoader.classList.add('d-none');
   let { meals } = data;
 
   // if meals is null then 
@@ -84,6 +84,9 @@ let showFoodDetails = (event) => {
 
   let foodId = isFood.querySelector('#food-id').innerHTML;
   mealDetailsLoader.classList.contains('d-none') && mealDetailsLoader.classList.remove('d-none');
+  
+  // set modal sections top 
+  mealDetails.style.top = window.pageYOffset + 'px';
   // show meal details option
   mealDetails.classList.remove('d-none');
   // search food details with food id.
@@ -98,19 +101,16 @@ let getFoodDetails = async (foodId) => {
   // hide loader when loading completed
   mealDetailsLoader.classList.add('d-none');
 
-  let { meals: [details] } = data;
-  let ingredients = getIngredientsList(details);
+  let { meals: [details] } = data; // destructure from data object
+  let ingredients = getIngredientsList(details); // get ingredient list
   let detailsContent = `
     <h1 class="fs-3 fw-bold">${details.strMeal}</h1>
     <h2 class="fs-5 fw-bold">Ingredients</h2>
-  `
+  `;
 
   let mealImage = `
     <img class="w-100 rounded-3" src="${details.strMealThumb}" alt="${details.strMeal}">
-  `
-  // set modal sections top 
-  mealDetails.style.top = window.pageYOffset + 'px';
-
+  `;
   // add details contents
   mealDetailsContentContainer.insertAdjacentHTML("afterbegin", detailsContent);
   mealDetailsContentContainer.append(ingredients);
@@ -148,7 +148,7 @@ let getIngredientsList = (foodDetails) => {
 // hide the details section
 let hideDetailsBox = () => {
   let detailsBox = document.querySelector('#meal-details');
-  detailsBox.classList.add('d-none')
+  detailsBox.classList.add('d-none');
   // unfreeze the window.
   document.body.style.overflow = "";
 }
