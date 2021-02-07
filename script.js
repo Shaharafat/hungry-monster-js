@@ -1,45 +1,61 @@
-let emptyIcon = document.querySelector('#empty-icon');
-let notFound = document.querySelector('#not-found-icon');
-let mealLoader = document.querySelector('#meals-loader');
-let mealDetailsLoader = document.querySelector('#meal-details-loader');
 let meals = document.querySelector('#meals');
 let mealDetailsContentContainer = document.querySelector('#meal-details-content'); 
 let mealImageContainer = document.querySelector('#meal-details-image');
 let mealDetails = document.querySelector('#meal-details');
+let mealLoader = document.querySelector('#meals-loader');
+let mealDetailsLoader = document.querySelector('#meal-details-loader');
+let form = document.forms.searchForm;
+let emptyIcon = document.querySelector('#empty-icon');
+let notFound = document.querySelector('#not-found-icon');
 
-
+// this will execute when search form submits.
 let submitForm = (event) => {
   // prevent browser default actions
   event.preventDefault();
 
+  // hide empty box icon
   emptyIcon.classList.add('d-none');
+  // clear meals data. so that previous data will be removed
   meals.innerHTML = "";
 
   // if response is not empty and 
   // not found is visible then hide it.
   notFound.classList.contains('d-none') || notFound.classList.add('d-none');
-  // find the form and get search text.
-  let form = document.forms.searchForm;
-  let searchText = form.elements.searchInput.value;
 
-  getFoods(searchText);
+  // get forms input text 
+  let searchText = form.elements.searchInput.value ;
+
+  if (searchText) {
+    // if searchText is not empty then get foods data
+    getFoods(searchText);
+  } else {
+    notFound.classList.remove('d-none');
+    return;
+  }
 }
 
 let getFoods = async (foodName) => {
-  mealLoader.classList.remove('d-none')
+  // show loader when fetching data
+  mealLoader.classList.remove('d-none');
   let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foodName}`);
   let data = await response.json();
+  // hide loader
   mealLoader.classList.add('d-none')
-  let {meals} = data;
+  let { meals } = data;
+
   // if meals is null then 
   // show error image and return
   if (!meals) {
     notFound.classList.remove('d-none');
     return;
   }
+
   foodItem(meals);
+  // remove previous searchText input
+  form.elements.searchInput.value = "";
 }
 
+// this will make food items and add it to the DOM.
 let foodItem = (foods) => {
   foods.forEach(food => {
     let foodBox = `
@@ -49,29 +65,36 @@ let foodItem = (foods) => {
         <small id="food-id" class="d-none">${food.idMeal}</small>
       </div>
     `
-
+    // add items to the end of meals section.
     meals.insertAdjacentHTML('beforeend', foodBox);
   })
 }
 
+// this will be called if one of the food item is clicked.
 let showFoodDetails = (event) => {
   let isFood = event.target.closest('#meal-box');
+
+  // if click is not in the food item, then stop execution
   if (!isFood) {
     return;
   }
+  // clear previous details
   mealImageContainer.innerHTML = "";
   mealDetailsContentContainer.innerHTML = "";
 
-  let foodId = isFood.querySelector('#food-id').innerHTML
+  let foodId = isFood.querySelector('#food-id').innerHTML;
   mealDetailsLoader.classList.contains('d-none') && mealDetailsLoader.classList.remove('d-none');
+  // show meal details option
   mealDetails.classList.remove('d-none');
+  // search food details with food id.
   getFoodDetails(foodId);
 }
 
 let getFoodDetails = async (foodId) => {
   let response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodId}`);
-  let data = await response.json();
+  let data = await response.json(); // food details response
 
+  // hide loader when loading completed
   mealDetailsLoader.classList.add('d-none');
 
   let { meals: [details] } = data;
@@ -84,20 +107,25 @@ let getFoodDetails = async (foodId) => {
   let mealImage = `
     <img class="w-100 rounded-3" src="${details.strMealThumb}" alt="${details.strMeal}">
   `
+  // set modal sections top 
   mealDetails.style.top = window.pageYOffset + 'px';
+
+  // add details contents
   mealDetailsContentContainer.insertAdjacentHTML("afterbegin", detailsContent);
   mealDetailsContentContainer.append(ingredients);
   mealImageContainer.insertAdjacentHTML('afterbegin', mealImage);
+  // freeze the window when modal is visible
   document.body.style.overflow = "hidden";
-  
 }
 
+// this function will return all the ingredients for specific food
 let getIngredientsList = (foodDetails) => {
   let ingredientNames = [];
   let ingredientQuantity = [];
   let ingredientListContainer = document.createElement('ul');
   ingredientListContainer.classList.add('ingredient-list');
   for (option in foodDetails) {
+    // if option name matches then push it.
     if (/^strIngredient\d*$/.test(option) && foodDetails[option] !== "") {
       ingredientNames.push(foodDetails[option])
     }
@@ -107,6 +135,7 @@ let getIngredientsList = (foodDetails) => {
     }
   }
 
+  // create ingredient list with ingredient quantity and ingredient name
   for (let index = 0; index < ingredientNames.length; index++){
     let li = `<li class="ingredient-item fs-5">${ingredientQuantity[index]} ${ingredientNames[index]}</li>`;
     ingredientListContainer.insertAdjacentHTML('beforeend', li);
@@ -115,8 +144,10 @@ let getIngredientsList = (foodDetails) => {
   return ingredientListContainer;
 }
 
+// hide the details section
 let hideDetailsBox = () => {
   let detailsBox = document.querySelector('#meal-details');
   detailsBox.classList.add('d-none')
+  // unfreeze the window.
   document.body.style.overflow = "";
 }

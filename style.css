@@ -10,11 +10,19 @@
   border-bottom-right-radius: 0;
 }
 
+#search-input:focus{
+  outline: none;
+}
+
 #search-submit-button{
   background-color: #F06C4E;
   border: 1px solid #F06C4E;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+#search-submit-button:focus{
+  border: none;
 }
 
 #search-submit-button:hover{
@@ -50,11 +58,20 @@
   color:#B2BEC3;
 }
 
+#meal-box{
+  transition: transform .3s ease-in;
+}
+
+#meal-box:hover{
+  transform: translateY(-3px);
+}
+
 #meal-details{
   height: 100vh;
   background: rgba(0,0,0,.5);
   position: absolute;
   left: 0;
+  z-index: 9999;
 }
 
 #meal-details-box{
