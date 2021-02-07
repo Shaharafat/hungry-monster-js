@@ -29,6 +29,10 @@
   width: 150px;
 }
 
+.loader{
+  width: 130px;
+}
+
 #meals{
   display: grid;
   grid-gap: 1.5rem;
@@ -49,18 +53,18 @@
 #meal-details{
   height: 100vh;
   background: rgba(0,0,0,.5);
-
   position: absolute;
-  top: 0;
   left: 0;
 }
 
 #meal-details-box{
+  min-height: 200px;
+  max-height: 90vh;
   background: #fff;
+  overflow-y:auto
 }
 
 #meal-details-box-content{
-  /* background-color: red; */
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(2, 1fr);
@@ -72,6 +76,22 @@
   width: 25px;
   cursor: pointer;
   
+}
+
+.ingredient-list{
+  max-height: 250px;
+  overflow-y: auto;
+  list-style-type: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  position: relative;
+}
+
+.ingredient-list li::before{
+  content: '\f058';
+  font-family: "Font Awesome 5 Free";
+  color: #2ed573;
+  margin-right: 10px;
 }
 
 

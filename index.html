@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
   <!-- Stylesheet -->
@@ -21,17 +23,20 @@
   <!-- Navbar Section End -->
   <!-- Main Section Start -->
   <main class="container mx-auto">
-    <!-- <section id="meal-details" class="row mx-auto d-flex justify-content-center align-items-center w-100">
+    <!-- Details Section Start -->
+    <section id="meal-details" class="row mx-auto d-flex d-none justify-content-center align-items-center w-100">
       <div id="meal-details-box" class="col-10 col-md-8 col-lg-7 p-2 p-md-3 d-flex flex-column align-items-center rounded-3">
         <span onclick="hideDetailsBox()" id="meal-details-box-close-button" class="align-self-end"><img class="w-100" src="./images/cancel.svg" alt="...."></span>
+        <img id="meal-details-loader" src="./images/loader.svg" alt="loader" class="loader align-self-center">
         <div id="meal-details-box-content" class="p-1 p-md-2">
           <div id="meal-details-image">
           </div>
           <div id="meal-details-content">
           </div>
-      </div>
         </div>
-    </section> -->
+      </div>
+    </section>
+    <!-- Details Section End -->
     <!-- Search Form Start -->
     <section id="search" class="row">
       <div onsubmit="submitForm(event)" class="col-10 col-sm-7 col-md-6 col-lg-4 mx-auto py-3 d-flex justify-content-center align-items-center">
@@ -46,14 +51,16 @@
     <section id="meals-container" class="row mx-2 mx-md-0 d-flex justify-content-center align-items-start">
       <!-- Empty Box Image -->
       <img id="empty-icon" class="icon align-self-center" src="./images/box.svg" alt="...">
+      <!-- Loader Image -->
+      <img id="meals-loader" class="loader d-none" src="./images/loader.svg" alt="..." class="d-none align-self-center">
       <!-- No Search Result Found Warning Section Start -->
-      <div id="not-found-icon" class="not-found d-none flex-column justify-content-center align-items-center align-self-center">
+      <div id="not-found-icon" class="not-found d-none d-flex flex-column justify-content-center align-items-center align-self-center">
         <img src="./images/not-found.svg" alt="..." class="icon">
         <h2 class="warning-text mt-2">Nothing Found</h2>
       </div>
       <!-- No Search Result Found Warning Section End -->
       <!-- Meals Will Be Added In The Section Below -->
-      <div id="meals" onClick="showFoodDetails(event)"></div>
+      <div id="meals" class="py-5" onClick="showFoodDetails(event)"></div>
     </section>
     <!-- Meals Section End -->
   </div>
