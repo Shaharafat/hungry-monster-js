@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./style.css">
+  <title>Hungry Monster</title>
+</head>
+<body>
+  <!-- Navbar Section Start -->
+  <nav class="container py-2 d-flex justify-content-center justify-content-md-start">
+    <a href="/">
+      <img src="./images/logo.png" alt="site logo">
+    </a>
+  </nav>
+  <!-- Navbar Section End -->
+  <!-- Main Section Start -->
+  <main class="container mx-auto">
+    <!-- <section id="meal-details" class="row mx-auto d-flex justify-content-center align-items-center w-100">
+      <div id="meal-details-box" class="col-10 col-md-8 col-lg-7 p-2 p-md-3 d-flex flex-column align-items-center rounded-3">
+        <span onclick="hideDetailsBox()" id="meal-details-box-close-button" class="align-self-end"><img class="w-100" src="./images/cancel.svg" alt="...."></span>
+        <div id="meal-details-box-content" class="p-1 p-md-2">
+          <div id="meal-details-image">
+          </div>
+          <div id="meal-details-content">
+          </div>
+      </div>
+        </div>
+    </section> -->
+    <!-- Search Form Start -->
+    <section id="search" class="row">
+      <div onsubmit="submitForm(event)" class="col-10 col-sm-7 col-md-6 col-lg-4 mx-auto py-3 d-flex justify-content-center align-items-center">
+        <form name="searchForm" class="d-flex align-items-center flex-grow-1">
+          <input name="searchInput" type="text" id="search-input" class="p-2 flex-grow-1" placeholder="Search for meal...">
+          <input name="searchSubmit" type="submit" id="search-submit-button" value="Submit" class="btn btn-primary p-2">
+        </form>
+      </div>
+    </section>
+    <!-- Search Form End -->
+    <!-- Meals Section Start -->
+    <section id="meals-container" class="row mx-2 mx-md-0 d-flex justify-content-center align-items-start">
+      <!-- Empty Box Image -->
+      <img id="empty-icon" class="icon align-self-center" src="./images/box.svg" alt="...">
+      <!-- No Search Result Found Warning Section Start -->
+      <div id="not-found-icon" class="not-found d-none flex-column justify-content-center align-items-center align-self-center">
+        <img src="./images/not-found.svg" alt="..." class="icon">
+        <h2 class="warning-text mt-2">Nothing Found</h2>
+      </div>
+      <!-- No Search Result Found Warning Section End -->
+      <!-- Meals Will Be Added In The Section Below -->
+      <div id="meals" onClick="showFoodDetails(event)"></div>
+    </section>
+    <!-- Meals Section End -->
+  </div>
+</div>
+  </main>
+  <!-- Main Section End -->
+  <!-- Script -->
+  <script src="./script.js"></script>
+</body>
+</html>
