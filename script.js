@@ -90,6 +90,7 @@ let showFoodDetails = (event) => {
   getFoodDetails(foodId);
 }
 
+// this function get the food details and shows in a modal.
 let getFoodDetails = async (foodId) => {
   let response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodId}`);
   let data = await response.json(); // food details response
