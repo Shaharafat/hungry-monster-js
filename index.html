@@ -41,7 +41,7 @@
     <section id="search" class="row">
       <div onsubmit="submitForm(event)" class="col-10 col-sm-7 col-md-6 col-lg-4 mx-auto py-3 d-flex justify-content-center align-items-center">
         <form name="searchForm" class="d-flex align-items-center flex-grow-1">
-          <input name="searchInput" onchange="changeSearchButtonStatus(event)" type="text" id="search-input" class="p-2 flex-grow-1" placeholder="Search for meal...">
+          <input name="searchInput" type="text" id="search-input" class="p-2 flex-grow-1" placeholder="Search for meal...">
           <input name="searchSubmit" type="submit" id="search-submit-button" value="Submit" class="btn btn-primary p-2">
         </form>
       </div>
@@ -59,6 +59,8 @@
         <h2 class="warning-text mt-2">Nothing Found</h2>
       </div>
       <!-- No Search Result Found Warning Section End -->
+      <!-- Error Text Section -->
+      <h2 id="error-text" class="warning-text mt-2 text-center d-none align-self-center"></h2>
       <!-- Meals Will Be Added In The Section Below -->
       <div id="meals" class="py-5" onClick="showFoodDetails(event)"></div>
     </section>

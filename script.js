@@ -7,6 +7,7 @@ let mealDetailsLoader = document.querySelector('#meal-details-loader');
 let form = document.forms.searchForm;
 let emptyIcon = document.querySelector('#empty-icon');
 let notFound = document.querySelector('#not-found-icon');
+let errorElement = document.querySelector('#error-text');
 
 // this will execute when search form submits.
 let submitForm = (event) => {
@@ -21,7 +22,7 @@ let submitForm = (event) => {
   // if response is not empty and 
   // not found is visible then hide it.
   notFound.classList.contains('d-none') || notFound.classList.add('d-none');
-
+  errorElement.classList.contains('d-none') || errorElement.classList.add('d-none');
   // get forms input text 
   let searchText = form.elements.searchInput.value ;
 
@@ -34,11 +35,21 @@ let submitForm = (event) => {
   }
 }
 
+// get all foods which match to search text 
 let getFoods = async (foodName) => {
   // show loader when fetching data
   mealLoader.classList.remove('d-none');
-  let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foodName}`);
-  let data = await response.json();
+  let data;
+
+  // get data from API
+  try {
+    let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foodName}`);
+    data = await response.json();
+  } catch (error) {
+    errorElement.classList.remove('d-none')
+    errorElement.innerHTML = "Something went wrong."
+  }
+
   // hide loader
   mealLoader.classList.add('d-none');
   let { meals } = data;
@@ -95,8 +106,15 @@ let showFoodDetails = (event) => {
 
 // this function get the food details and shows in a modal.
 let getFoodDetails = async (foodId) => {
-  let response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodId}`);
-  let data = await response.json(); // food details response
+  let data;
+
+  try {
+    let response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodId}`);
+    data = await response.json(); // food details response
+  } catch (error) {
+    errorElement.classList.remove('d-none')
+    errorElement.innerHTML = "Something went wrong."
+  }
 
   // hide loader when loading completed
   mealDetailsLoader.classList.add('d-none');
@@ -113,8 +131,8 @@ let getFoodDetails = async (foodId) => {
   `;
   // add details contents
   mealDetailsContentContainer.insertAdjacentHTML("afterbegin", detailsContent);
-  mealDetailsContentContainer.append(ingredients);
   mealImageContainer.insertAdjacentHTML('afterbegin', mealImage);
+  mealDetailsContentContainer.append(ingredients);
   // freeze the window when modal is visible
   document.body.style.overflow = "hidden";
 }
@@ -125,6 +143,7 @@ let getIngredientsList = (foodDetails) => {
   let ingredientQuantity = [];
   let ingredientListContainer = document.createElement('ul');
   ingredientListContainer.classList.add('ingredient-list');
+  
   for (option in foodDetails) {
     // if option name matches then push it.
     if (/^strIngredient\d*$/.test(option) && foodDetails[option] !== "") {
