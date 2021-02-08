@@ -7,7 +7,7 @@ let mealDetailsLoader = document.querySelector('#meal-details-loader');
 let form = document.forms.searchForm;
 let emptyIcon = document.querySelector('#empty-icon');
 let notFound = document.querySelector('#not-found-icon');
-let errorElement = document.querySelector('#error-text');
+let error = document.querySelector('#error-text');
 
 // this will execute when search form submits.
 let submitForm = (event) => {
@@ -22,7 +22,7 @@ let submitForm = (event) => {
   // if response is not empty and 
   // not found is visible then hide it.
   notFound.classList.contains('d-none') || notFound.classList.add('d-none');
-  errorElement.classList.contains('d-none') || errorElement.classList.add('d-none');
+  error.classList.contains('d-none') || error.classList.add('d-none');
   // get forms input text 
   let searchText = form.elements.searchInput.value ;
 
@@ -46,8 +46,7 @@ let getFoods = async (foodName) => {
     let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foodName}`);
     data = await response.json();
   } catch (error) {
-    errorElement.classList.remove('d-none')
-    errorElement.innerHTML = "Something went wrong."
+    error.classList.remove('d-none')
   }
 
   // hide loader
@@ -112,8 +111,8 @@ let getFoodDetails = async (foodId) => {
     let response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodId}`);
     data = await response.json(); // food details response
   } catch (error) {
-    errorElement.classList.remove('d-none')
-    errorElement.innerHTML = "Something went wrong."
+    // show error text
+    error.classList.remove('d-none')
   }
 
   // hide loader when loading completed
